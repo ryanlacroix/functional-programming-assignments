@@ -1,0 +1,274 @@
+Ryan Lacroix, 100901696
+COMP 3007 Assignment 2 test outputs
+All outputs are checked and verified correct except when stated otherwise.
+
+----------Question 1----------
+;     make some intervals
+> (define interval1 (make-interval 5 10))
+> interval1
+(5 . 10)
+> (define interval2 (make-interval 7 15))
+> interval2
+(7 . 15)
+; Output is correct
+
+;     Check the upper and lower bounds fucntions
+> (upper interval1)
+10
+> (upper interval2)
+15
+> (lower interval1)
+5
+> (lower interval2)
+7
+; Output is correct
+
+;     Check add-interval function
+> (add-interval interval1 interval2)
+(12 . 25)
+> (add-interval '(100 . 50) '(32 . 12))
+(132 . 62)
+> (add-interval '(0 . 1) '(0 . 1))
+(0 . 2)
+
+;     Check substract-interval function
+> (subtract-interval interval1 interval2)
+(-10 . 3)
+> (subtract-interval '(12 . 12) '(11 . 11))
+(1 . 1)
+> (subtract-interval '(-12 . 12) '(11 . -11))
+(-1 . 1)
+
+;     Check multiply-interval function
+> (multiply-interval interval1 interval2)
+(35 . 150)
+> (multiply-interval '(10 . 100) '(2 . 7))
+(20 . 700)
+> (multiply-interval '(34 . -5) '(0 . 22))
+(-110 . 748)
+
+;     Check divide-interval
+> (divide-interval '(3 . 4) '(4 . 3))
+(3/4 . 1 1/3)
+> (divide-interval '(3 . 0) '(2 . 22))
+(0 . 1 1/2)
+> (divide-interval '(50 . 50) '(0 . 12))
+error
+> (divide-interval '(13 . -5) '(13 . 0))
+error
+
+----------Question 2----------
+> (define iterator (forEach (list 1 2 3 4 5)))
+> (iterator (lambda (x)(* x x)))
+(1 4 9 16 25)
+> (iterator (lambda (x)(* x 10)))
+(10 20 30 40 50)
+> (iterator (lambda (x) (+ x 7)))
+(8 9 10 11 12)
+> (iterator (lambda (x) (+ x 8)))
+(9 10 11 12 13)
+
+----------Question 3----------
+; a)
+> (special-car (special-cons 1 2))
+1
+> (special-cdr (special-cons 1 2))
+2
+> (special-car (special-cons 12 27))
+12
+> (special-cdr (special-cons -8 -9))
+-9
+
+; b)
+;     NOTE: the function 'first' was renamed to 'triple-first'.
+;           This was due to a name collision with a function later
+;           in the assingment.
+> (define a (triple 1 2 3))
+> (triple-first a)
+1
+> (second a)
+2
+> (third a)
+3
+> (define b (triple -1 34 -7))
+> (triple-first b)
+-1
+> (second b)
+34
+> (third b)
+-7
+
+----------Question 4----------
+; a)
+> (my-map (lambda (x) (* x x)) (list 1 2 3 4 5))
+(1 4 9 16 25)
+> (my-map (lambda (x) (+ x 2)) (list 1 2 3 4 5))
+(3 4 5 6 7)
+> (my-map (lambda (x) (/ x 5)) (list 5 10 15 20 25))
+(1 2 3 4 5)
+
+; b)
+> (my-append (list 1 2 3 4 5) (list 7 8 9))
+(1 2 3 4 5 7 8 9)
+> (my-append (list -2 5 -1 7) (list 0 0 0 0 -1))
+(-2 5 -1 7 0 0 0 0 -1)
+> (my-append (list 100 1000 10000) (list -100 -1000 -1000))
+(100 1000 10000 -100 -1000 -1000)
+
+; c)
+> (my-length (list 3 5 7 9))
+4
+> (my-length '(4 -4 4 -4 4 -4 4 -4))
+8
+> (my-length '(12345 678910))
+2
+
+; d)
+> (my-filter odd? '(1 2 3 4 5 6 7 8 9))
+(1 3 5 7 9)
+> (my-filter even? '(5 10 15 20 25 30 35 40 45))
+(10 20 30 40)
+> (my-filter (lambda (x) (> x 12)) '(10 11 12 13 14 15 16 17))
+(13 14 15 16 17)
+
+----------Question 5----------
+; a)
+> (intersection-set-iter '(1 2 3 4 5 6) '(4 5 6 7 8 9 10))
+(6 5 4)
+> (intersection-set-iter (list -1 -5 -10) (list 8 10 -5))
+(-5)
+> (intersection-set-iter '(1050 -1050 12 600001) (list 55 44 33 22 600002))
+()
+
+; b)
+> (intersection-set '(1 2 3 4 5 6) '(4 5 6 7 8 9 10))
+(6 5 4)
+> (intersection-set '(-11 -13 -15 -17) '(14 -15 16 -17 1 1 1))
+(-17 -15)
+> (intersection-set (list 100 200 300 400) '(100 -200 -300 -400))
+(100)
+> (intersection-set (list 1) (list 2))
+()
+
+; c)
+> (mean (list 5 10 15))
+10
+> (mean '(1 2 3 4 5 6 7))
+4
+> (mean (list -1000 1000))
+0
+> (mean '( a 2 b 3 c 4 d 5))
+3 1/2
+
+; d)
+;     NOTE: This function doesn't work properly.
+;           Outputs are all close-ish but incorrect.
+> (subsets '(a b))
+((a . a) (a . b) (b . a) (b . b))
+> (subsets '(a b c))
+((a . a) (a . b) (a . c) (b . a) (b . b) (b . c) (c . a) (c . b) (c . c))
+> (subsets '(1 2 3 4))
+((1 . 1)
+ (1 . 2)
+ (1 . 3)
+ (1 . 4)
+ (2 . 1)
+ (2 . 2)
+ (2 . 3)
+ (2 . 4)
+ (3 . 1)
+ (3 . 2)
+ (3 . 3)
+ (3 . 4)
+ (4 . 1)
+ (4 . 2)
+ (4 . 3)
+ (4 . 4))
+
+----------Question 6----------
+; a)
+> (depth 'a)
+0
+> (depth '(a))
+1
+> (depth '(a (b) c))
+2
+> (depth '(((((a(((b)))))))))
+8
+> (depth '((((((((((((((((((a)))))))))))b))c d))))))
+18
+
+; b)
+> (treemap sqr '(1 (2 3) ((4 5) (6 7)) (((8 (9))))))
+(1 (4 9) ((16 25) (36 49)) (((64 (81)))))
+> (treemap abs '(-5 -12 ((3 -4) 7) -88 (((88))) 1 (1)))
+(5 12 ((3 4) 7) 88 (((88))) 1 (1))
+> (treemap (lambda (x) (+ x 100)) '((((1))) 2 3 4 -100 (((-39) -20))))
+((((101))) 102 103 104 0 (((61) 80)))
+
+; c)
+> (flattenList '(((((((1 2)) 3)) 4 5 6)) 8 9 (10)))
+(1 2 3 4 5 6 8 9 10)
+> (flattenList '( 2 4 8 ((((((((((-13)))))))))) 13))
+(2 4 8 -13 13)
+> (flattenList '((5) 10 ((15)) 20 (((25))) 30 ((((35)))) 40))
+(5 10 15 20 25 30 35 40)
+
+----------Question 7----------
+; a)
+; i)
+> (define a (first 3 integers))
+> a
+(1 . #<promise>)
+> (stream-cdr a)
+(2 . #<promise>)
+> (stream-cdr (stream-cdr a))
+(3 . #<promise>)
+> (stream-cdr (stream-cdr (stream-cdr a)))
+()
+
+; ii)
+> (define strFromList (list->stream '(1 2 3 4 5 6)))
+> strFromList
+(1 . #<promise>)
+> (stream-cdr strFromList)
+(2 . #<promise>)
+> (stream-cdr (stream-cdr strFromList))
+(3 . #<promise>)
+
+; a iii) & b i, ii, iii) 
+;     Tested together to avoid loads of unnecessary stream-cdrs.
+> (define listFromStr (stream->list (first 4 integers)))
+> listFromStr
+(1 2 3 4)
+> (define listFromStr (stream->list (first 10 stream-of-odds)))
+> listFromStr
+(1 3 5 7 9 11 13 15 17 19)
+> (define listFromStr (stream->list (first 10 stream-of-ones)))
+> listFromStr
+(1 1 1 1 1 1 1 1 1 1)
+> (define listFromStr (stream->list (first 10 (stream-of-randoms))))
+> listFromStr
+(29 31 72 64 36 63 66 58 60 95)
+
+; b iv)
+> (define noFun (stream-of-function))
+> noFun
+(1 . #<promise>)
+> (stream-cdr noFun)
+(2 . #<promise>)
+> (stream-cdr (stream-cdr noFun))
+(3 . #<promise>)
+> (stream-cdr (stream-cdr (stream-cdr noFun)))
+(10 . #<promise>)
+> (define Fn (stream->list (first 10 noFun)))
+> Fn
+(1 2 3 10 22 51 125 293 696 1657)
+
+; c)
+> (stream->list (first 10 (partial-sums integers)))
+(1 3 6 10 15 21 28 36 45 55)
+> (stream->list (first 10 (partial-sums stream-of-ones)))
+(1 2 3 4 5 6 7 8 9 10)
+> (stream->list (first 10 (partial-sums (stream-of-randoms))))
+(45 96 179 195 240 250 317 384 442 488)

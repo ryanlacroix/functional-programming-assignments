@@ -1,0 +1,34 @@
+Ryan Lacroix, 100901696
+COMP3007 Assignment 3
+
+All code belongs to me with the exception of the majority of the Metacircular interpreter. All let related functions contained within the interpreter do however belong to me.
+
+----------Question 1----------
+Testing is contained within the Question1.rkt file.
+
+----------Question 2----------
+All contour diagrams for question 2 are contained in Question2.pdf
+
+----------Question 3----------
+a) See Question3a.pdf
+
+b) The expected output using lexical scoping is 300.
+
+c) This code works using dynamic scoping, however returns a different result. The set! in in2 affects the z from in1 as opposed to the z in outer's scope. This results in an output of 520.
+
+----------Question 4----------
+(let ((a 12)) (* a 2))
+;;; M-Eval value:
+24
+
+(let ((a 2) (b 3))(+ b a))
+;;; M-Eval value:
+5
+
+(let ((a "spa") (z "ghetti")) (cons a z))
+;;; M-Eval value:
+(spa . ghetti)
+
+(let ((bob (cons 3 7))(bbob 7))(cons "bob" (cons bbob bob)))
+;;; M-Eval value:
+(bob 7 3 . 7)

@@ -1,0 +1,80 @@
+Squares : Average ((x/y) + y) / 2
+Cubes   : Average (x/y^2+2y)/3
+
+----------Question 6----------
+a)
+  When run using applicative order, the statement calling (test 0 (p)) would first evaluate p, because it is in the innermost set of parentheses. This would cause an infinite loop of p calling itself over and over again.
+b)
+  When run using normal order, the call to (test 0 (p)) ignores that p is being invoked because it is running the call to the function first. The function determines that x is 0 and terminates before p can be invoked.
+c)
+  Scheme appears to run in applicative order, as the function p is called before test can be invoked. This causes Scheme to hang.
+
+----------Question 7----------
+> (cubert 1)
+1.0
+> (cubert 0)
+0.0877914951989026   <-- A close approximation I suppose!
+> (cubert 14)
+2.4101429218918713
+> (cubert -14)
+-2.410147569972736
+> (cubert 30567)
+31.266860237056367
+
+----------Question 8----------
+case b > 0: (a-b 5 1)
+(cond ((> b 0) +)) a b)
+(cond ((> 1 0) +)) 5 1)
+(+ 5 1)
+6
+
+case b = 0: (a-b 7 0)
+(cond ((= b 0) -)) a b)
+(cond ((= 0 0) -)) 7 0)
+(- 7 0)
+7
+
+case else: (a-b 10 -5)
+(cond ((else *)) a b)
+(cond ((else *)) 10 -5)
+(* 10 -5)
+-50
+
+ When b is positive, (a-b ab) adds the two numbers.
+ When b is 0, (a-b ab) returns the value of a.
+ When b is negative, (a-b a b) multiplies a and b.
+ In regards to the operation used, the behaviour of (a-b a b) is unaffected by the value of a.
+
+----------Question 9----------
+a)
+> (my-sqrt 1231 good-enough1 -1)
+35.085609585712376
+> (my-sqrt 1231 good-enough2 -1)
+35.08564171017947
+> (my-sqrt 1231 good-enough3 -1)
+35.13312028519343
+
+good-enough1 accepts difference of up to 0.00001
+good-enough2 accepts difference of up to 0.1
+good-enough3 accepts difference of up to 100
+
+Note: the -1 argument allows an infinite number of iterations
+
+b)
+> (my-sqrt 130 good-enough1 200)
+11.401754254809113
+> (my-sqrt 130 good-enough1 10)
+11.401754254809113
+> (my-sqrt 130 good-enough1 5)
+11.484076580659188
+> (my-sqrt 130 good-enough1 3)
+18.79754483723633
+> (my-sqrt 130 good-enough1 2)
+33.74236641221374
+> (my-sqrt 130 good-enough1 1)
+65.5
+
+The decrease in allowed iterations has a severe impact on accuracy of my-sqrt.
+
+c)
+new-if does not work correctly, and hangs the interpreter. This is because Scheme runs in applicative order, and as such runs the sqrt-iteration function, which is the alternate of the new-if, before the new-if statement is fully evaluated. It will always run sqrt-iteration first, resulting in an infinite loop.
